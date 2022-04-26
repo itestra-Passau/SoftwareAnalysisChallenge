@@ -18,6 +18,10 @@ For this reason the first feature we want for our project is to get the number o
 
 The output should be a Map containing the filename of each provided Java file as key and and `Output` element as value. The Output should contain the number of source lines of code of the file. (SLOC: lines of code excluding empty lines and lines containing comments).
 
+As a filename you can use the relative path to the file (i.e. `file.getPath()`)
+
+For simplicity you can ignore block comments for this task and only exclude line comments (starting with `//`) from your count.
+
 Example Code:
 ```Java
 Map<String, Output> result = new HashMap<String, Output>();
@@ -25,7 +29,7 @@ result.put("file1.java", new Output(123, null));
 ```
 
 ### 2. Analyze the project dependencies
-To better understand how the given projects are dependent on each other our tool should be able to detect, if a file/class is dependent on other files/classes. The goal is to be able to tell if a file is dependent on a file from another project either directly or indirectly through local dependencies.
+To better understand how the given projects are dependent on each other our tool should be able to detect, if a file/class is dependent on other files/classes. The goal is to be able to tell if a file is dependent on a file from another project either directly or indirectly through relevant dependencies (dependecies to one of the three example projects).
 
 This means that if `A/file1.java` is dependent on `A/file2.java` which is dependent on `B/file3.java`, both `A/file1.java` and `A/file2.java` are dependent on project `B`. 
 
@@ -33,6 +37,13 @@ To detect if a file has dependencies it is sufficient to look at the packages th
 
 To make the output more readable please only provide a list of project names the file is dependent on and only projects contained inside the `CodeExamples` folder.
 For this reason it is not nescessary to go through all dependencies, but it is enough to look at dependencies inside the `CodeExamples` folder. External dependencies to code outside the known three projects can be ignored.
+
+Additionally you can ignore two special cases for this analysis, which might be more effort to implement:
+ - You can ignore static imports like `import static ...`
+ - You can ignore wildcard imports like `import x.y.*`
+ - You can ignore dependencies which do not use an `import` statements like `java.util.List<String> list = new java.util.ArrayList<>();`
+
+This task should extend the output of Task 1.
 
 Example Code:
 ```Java
@@ -42,15 +53,17 @@ dependencies.add("spark");
 result.put("file1.java", new Output(123, dependencies));
 ```
 
-### 3. BONUS: Analyze the number of source lines excluding getters
+### 3. BONUS: Analyze the number of source lines excluding getters and block comments
 In Java programming it is very common pattern to use getters and setters in classes for the properties of that class. The code for these getters and setters is mostly generated automatically by the IDE, so counting them as source code lines might be missleading in an analysis of the results. That's why it makes sense  to add an additional field to our output counting the source lines of code without these code blocks.
 
-The resulting lines should follow the rules of task 1, which means empty lines and comments do not count into the result and additionally we remove lines which are part of a getter. Setters can be ignored for this task, as the work is mostly the same, but with more complex detection rules.
+Additionally we don't want to count block comments for this task, so you need to detext blocks which are comments and exclude them from your count. (Block comments are `/* ... */`)
+
+The resulting lines should follow the rules of task 1, which means empty lines and comments do not count into the result and additionally we remove lines which are part of a getter and lines which are part of a block comment. Setters can be ignored for this task, as the work is mostly the same, but with more complex detection rules.
 
 To detect if a code-block is a getter you can use the following pattern where `<...>` can be anything and `(...)?` is optional:
 ```Java
-public <Type> get<VarName1>(){
-    return (this.)?<VarName2>
+public <...> get<...>(){
+    return (this.)?<...>;
 }
 ```
 
