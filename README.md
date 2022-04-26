@@ -42,14 +42,25 @@ dependencies.add("spark");
 result.put("file1.java", new Output(123, dependencies));
 ```
 
-### 3. BONUS: Analyze the number of source lines excluding getters and setters
+### 3. BONUS: Analyze the number of source lines excluding getters
 In Java programming it is very common pattern to use getters and setters in classes for the properties of that class. The code for these getters and setters is mostly generated automatically by the IDE, so counting them as source code lines might be missleading in an analysis of the results. That's why it makes sense  to add an additional field to our output counting the source lines of code without these code blocks.
 
-The resulting lines should follow the rules of task 1, which means empty lines and comments do not count into the result and additionally we remove lines which are part of a getter or a setter.
+The resulting lines should follow the rules of task 1, which means empty lines and comments do not count into the result and additionally we remove lines which are part of a getter. Setters can be ignored for this task, as the work is mostly the same, but with more complex detection rules.
+
+To detect if a code-block is a getter you can use the following pattern where `<...>` can be anything and `(...)?` is optional:
+```Java
+public <Type> get<VarName1>(){
+    return (this.)?<VarName2>
+}
+```
+
+### Asking questions while implementing
+We tried to put as much information in this readme as possible, but if you face any issues with project setup or with understanding the tasks please use the [issue page on the template respository](https://github.com/itestra-Passau/SoftwareAnalysisChallenge/issues) or send us a mail to [passau@itestra.de](mailto:passau@itestra.de)
 
 ---
 
 ## Project Setup
+To setup the project you need to have Maven installed on your machine, which should be installed by default if you have installed IntelliJ or Eclipse before, but in case you face an issue with that, see the following guide for [installing Maven](https://maven.apache.org/install.html)
 ### Eclipse
 1. Setup your GitHub classroom assignment and clone the created project
 2. In Eclipse go to File > Import...
