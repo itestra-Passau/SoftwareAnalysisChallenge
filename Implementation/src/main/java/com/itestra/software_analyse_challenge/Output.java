@@ -5,8 +5,8 @@ import java.util.List;
 public class Output {
 
     private final int lineNumber;
-    private boolean hasLineNumberWithoutGetterSetter = false;
-    private int lineNumberWithoutGetterSetter;
+    private boolean hasLineNumberWithoutGetter = false;
+    private int lineNumberWithoutGetter;
 
     private final List<String> dependencies;
 
@@ -16,9 +16,9 @@ public class Output {
     }
 
     @SuppressWarnings("unused")
-    public Output lineNumberWithoutGetterSetter(final int lineNumberWithoutGetterSetter) {
-        this.lineNumberWithoutGetterSetter = lineNumberWithoutGetterSetter;
-        this.hasLineNumberWithoutGetterSetter = true;
+    public Output lineNumberWithoutGetter(final int lineNumberWithoutGetter) {
+        this.lineNumberWithoutGetter = lineNumberWithoutGetter;
+        this.hasLineNumberWithoutGetter = true;
         return this;
     }
 
@@ -26,8 +26,8 @@ public class Output {
         return String.valueOf(lineNumber);
     }
 
-    public String getLineNumberWithoutGetterSetter() {
-        return this.hasLineNumberWithoutGetterSetter ? String.valueOf(lineNumberWithoutGetterSetter) : "N/A";
+    public String getLineNumberWithoutGetter() {
+        return this.hasLineNumberWithoutGetter ? String.valueOf(lineNumberWithoutGetter) : "N/A";
     }
 
     public String getDependencies() {

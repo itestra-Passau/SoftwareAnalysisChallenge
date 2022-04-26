@@ -58,10 +58,10 @@ public class SourceCodeAnalyser {
         System.out.println("Result: ");
         List<OutputLine> outputLines =
                 outputMap.entrySet().stream()
-                        .map(e -> new OutputLine(e.getKey(), e.getValue().getLineNumber(), e.getValue().getLineNumberWithoutGetterSetter(), e.getValue().getDependencies()))
+                        .map(e -> new OutputLine(e.getKey(), e.getValue().getLineNumber(), e.getValue().getLineNumberWithoutGetter(), e.getValue().getDependencies()))
                         .sorted(Comparator.comparing(OutputLine::getFileName))
                         .collect(Collectors.toList());
-        outputLines.add(0, new OutputLine("filename", "lineNumber", "lineNumberWithoutGetterSetter", "dependencies"));
+        outputLines.add(0, new OutputLine("filename", "lineNumber", "lineNumberWithoutGetter", "dependencies"));
         int maxDirectoryName = outputLines.stream().map(OutputLine::getFileName).mapToInt(String::length).max().orElse(100);
         int maxLineNumber = outputLines.stream().map(OutputLine::getLineNumber).mapToInt(String::length).max().orElse(100);
         int maxLineNumberWithoutGetterAndSetter = outputLines.stream().map(OutputLine::getLineNumberWithoutGetterSetter).mapToInt(String::length).max().orElse(100);
