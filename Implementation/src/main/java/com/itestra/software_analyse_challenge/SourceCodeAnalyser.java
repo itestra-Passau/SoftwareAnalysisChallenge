@@ -17,8 +17,8 @@ public class SourceCodeAnalyser {
     public static Map<String, Output> analyse(Input input) {
         // TODO insert your Code here.
 
-        // For each filename put one Output object to your result map.
-        // You can extend the Output object using the functions lineNumberWithoutGetterSetter(int), if you want did
+        // For each file put one Output object to your result map.
+        // You can extend the Output object using the functions lineNumberBonus(int), if you did
         // the bonus exercise.
 
         return Collections.emptyMap();
@@ -58,10 +58,10 @@ public class SourceCodeAnalyser {
         System.out.println("Result: ");
         List<OutputLine> outputLines =
                 outputMap.entrySet().stream()
-                        .map(e -> new OutputLine(e.getKey(), e.getValue().getLineNumber(), e.getValue().getLineNumberWithoutGetter(), e.getValue().getDependencies()))
+                        .map(e -> new OutputLine(e.getKey(), e.getValue().getLineNumber(), e.getValue().getLineNumberBonus(), e.getValue().getDependencies()))
                         .sorted(Comparator.comparing(OutputLine::getFileName))
                         .collect(Collectors.toList());
-        outputLines.add(0, new OutputLine("filename", "lineNumber", "lineNumberWithoutGetter", "dependencies"));
+        outputLines.add(0, new OutputLine("File", "Source Lines", "Source Lines without Getters and Block Comments", "Dependencies"));
         int maxDirectoryName = outputLines.stream().map(OutputLine::getFileName).mapToInt(String::length).max().orElse(100);
         int maxLineNumber = outputLines.stream().map(OutputLine::getLineNumber).mapToInt(String::length).max().orElse(100);
         int maxLineNumberWithoutGetterAndSetter = outputLines.stream().map(OutputLine::getLineNumberWithoutGetterSetter).mapToInt(String::length).max().orElse(100);
