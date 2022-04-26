@@ -2,6 +2,7 @@ package com.itestra.software_analyse_challenge;
 
 import org.apache.commons.cli.*;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,6 @@ public class SourceCodeAnalyser {
      * @return mapping from filename -> {@link Output} object.
      */
     public static Map<String, Output> analyse(Input input) {
-
         // TODO insert your Code here.
 
         // For each filename put one Output object to your result map.
@@ -31,12 +31,14 @@ public class SourceCodeAnalyser {
      * No changes below here are necessary!
      */
 
-    public static Option INPUT_DIR = Option.builder("i")
+    public static final Option INPUT_DIR = Option.builder("i")
             .longOpt("input-dir")
             .hasArg(true)
             .desc("input directory path")
-            .required(true)
+            .required(false)
             .build();
+
+    public static final String DEFAULT_INPUT_DIR = String.join(File.separator , Arrays.asList("..", "CodeExamples", "src", "main", "java"));
 
     private static Input parseInput(String[] args) {
         Options options = new Options();
