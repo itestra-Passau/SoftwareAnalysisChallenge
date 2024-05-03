@@ -56,7 +56,7 @@ result.put("file1.java", new Output(123, dependencies));
 ### 3. BONUS: Analyze the number of source lines excluding getters and block comments
 In Java programming it is very common pattern to use getters and setters in classes for the properties of that class. The code for these getters and setters is mostly generated automatically by the IDE, so counting them as source code lines might be missleading in an analysis of the results. That's why it makes sense  to add an additional field to our output counting the source lines of code without these code blocks.
 
-Additionally we don't want to count block comments for this task, so you need to detext blocks which are comments and exclude them from your count. (Block comments are `/* ... */`)
+Additionally we don't want to count block comments for this task, so you need to detect blocks which are comments and exclude them from your count. This also incudes JavaDoc comments. (Block comments are `/* ... */`)
 
 The resulting lines should follow the rules of task 1, which means empty lines and comments do not count into the result and additionally we remove lines which are part of a getter and lines which are part of a block comment. Setters can be ignored for this task, as the work is mostly the same, but with more complex detection rules.
 
